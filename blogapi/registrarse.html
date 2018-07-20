@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Blog API</title>
+	<script type="text/javascript" src="assets/js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="assets/js/login-api.js"></script>
+	<script type="text/javascript" src="assets/js/login.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+	<script type="text/javascript">
+		var token = window.localStorage.getItem("token");
+
+		if ( token !== null) {
+			window.location = "index.html";
+		}
+	</script>
+</head>
+<body>
+<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-5"></div>
+			<div class="col-md-5 col-md-offset-5"><br><br><br>
+				<h1><span>Blog API - Registrarse</span></h1><br>
+
+				<div class="form-group">
+					<label class="col-xs-8 control-label">Nombre</label>
+						<input type="text" class="form-control" name="nombre" id="nombre" />
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-8 control-label">Email</label>
+						<input type="text" class="form-control" name="email" id="email" />
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-8 control-label">Contraseña</label>
+						<input type="password" class="form-control" name="password" id="password" />
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-4 control-label">Repetir Contraseña</label>
+						<input type="Password" class="form-control" name="password2" id="password2" />
+				</div>
+
+				<div class="form-group">
+					<button class="btn btn-default" id="btnRegister">Registrarse</button>
+				</div>
+			</div>
+			<div class="col-md-2 col-md-offset-2"></div>
+		</div>
+</body>
+</html>
+
+
+

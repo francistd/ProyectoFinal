@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Blog AP</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="assets/js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="assets/js/login-api.js"></script>
+	<script type="text/javascript" src="assets/js/logout.js"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			$("#btnSalir").click(()=>{
+
+				var token = window.localStorage.getItem("token");
+				loginApi.logout(token)
+				.then(function(data){
+					window.localStorage.removeItem("token");
+					window.location = "login.html";
+				})
+				.catch(error => console.log(error));
+			});
+
+
+
+
+//Cargamos Tabla
+var posteos = $("#posteos");
+var token = window.localStorage.getItem("token");
+
+if (token == null) {
+	window.location = "login.html";
+}
+
+
+$.ajax({
+	method: 'GET',
+	url: "http://localhost:8080/post",
+	headers : {'Authorization': 'Bearer '+token},
+	success : function(post){
+		$.each(post, function(i,posts){
+			posteos.append('<div class="container"><table><td><h3>'+ posts.title +'<span id="btn"> <a href=""><img src="17232-200.png"width="25" height="25"></a></span></h3><p>By: '+ posts.userId+'</p> '+ posts.body+'</td></table><hr style="color: #0056b2;"></div>');
+
+
+		});
+	}
+
+});
+
+});
+
+</script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col"><br>
+				<div><h1><span>Post</span></h1></div>
+				<div><p class="text-right"><button  id="btnSalir">LogOut</button></p></div>		
+
+				<div class="col-md-12"><br><br>
+
+					<!-- Inicia Modal-->
+
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+								</div>
+								<div class="modal-body">
+									...
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Termina Modal-->
+
+					<table class="table">
+						<tbody id="posteos">
+							
+						</tbody>
+
+						<tbody id="comentarios">
+						</tbody>
+						<colgroup>
+							<col style="background:pink">
+							<col span="2" style="background:yellow">
+						</colgroup>
+					</table>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Blog API</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+	<script type="text/javascript" src="assets/js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="assets/js/login-api.js"></script>
+	<script type="text/javascript" src="assets/js/login.js"></script>
+
+	<script type="text/javascript">
+		var token = window.localStorage.getItem("token");
+
+		if ( token !== null) {
+			window.location = "index.html";
+		}
+	</script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-5"></div>
+			<div class="col-md-5 col-md-offset-5"><br><br><br>
+				<h1><span>Blog API - Login</span></h1><br>
+
+				<form id="form">
+				<div class="form-group">
+					<label for="email" class="col-xs-5 control-label">Email</label>
+						<input type="text" class="form-control" name="email" id="email" />
+				</div>
+
+				<div class="form-group">
+					<label for="password" class="col-xs-4 control-label">Contraseña</label>
+						<input type="Password" class="form-control" name="password" id="password" />
+				</div>
+
+				<div class="form-group text-right">
+					<a href="registrarse.html">+ Registrarse  </a><button type="button" class="btn btn-primary" id="btnLogin">Login</button>
+				</div>
+				</form>
+			</div>
+			<div class="col-md-2 col-md-offset-2"></div>
+		</div>
+	</body>
+	</html>
