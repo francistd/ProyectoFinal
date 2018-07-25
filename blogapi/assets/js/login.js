@@ -48,6 +48,33 @@ function login(){
 		});
 	}
 
+//post
+function post(){
+		var body = $("#comentario").val();
+		var id = window.localStorage.getItem("idPost");
+		
+
+
+		// if (name != null) {
+		// 	alert("Campo vacio");
+		// 	return;
+		// }
+
+		loginApi.post(body,id)
+		.then(function(responsen){
+			console.log("Successfully: ", responsen);
+			// login();
+
+		})
+
+		.catch(function(error){
+			alert("Error: Intentelo nuevamente");
+			// window.location = "index.html";
+			console.log("Error", error);
+		});
+	}
+
+//termina post
 
 	window.onload = function(){
 		//TODO: validar si Existe un token enviarlo al index
@@ -59,6 +86,10 @@ function login(){
 
 		$("#btnRegister").click(function(){
 			register();
+		})
+
+		$("#btnPost").click(function(){
+			post();
 		})
 	}
 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Comentar Post</title>
+	<script type="text/javascript" src="assets/js/jquery-3.3.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+	
+
+	<script type="text/javascript" src="assets/js/login-api.js"></script>
+	<script type="text/javascript" src="assets/js/login.js"></script>
+
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+			$("#btnSalir").click(()=>{
+
+				var token = window.localStorage.getItem("token");
+				loginApi.logout(token)
+				.then(function(data){
+					window.localStorage.removeItem("token");
+					window.location = "login.html";
+				})
+				.catch(error => console.log(error));
+			});
+
+
+//Cargamos Tabla
+var posteos = $("#posteo");
+var token = window.localStorage.getItem("token");
+
+if (token == null) {
+	window.location = "login.html";
+}
+
+
+
+//empiezo aqui
+
+    var ids = window.localStorage.getItem("idPost");
+
+    $.ajax({
+    	method: 'GET',
+    	url: 'http://localhost:8080/post/'+ids +'/comment ',
+    	headers : {'Authorization': 'Bearer '+token},
+    	success : function(post){
+    		$.each(post, function(i,posts){
+
+    			posteos.append('<div class="container"><table><td><p>By: '+ posts.userId+'</p> '+ posts.body+'</td></table><hr style="color: #0056b2;"></div>');
+					
+				});
+    	}
+
+    });
+//termino aqui
+
+});
+
+
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-5"></div>
+			<div class="col-md-5 col-md-offset-5"><br><br><br>
+				<h1><span>Blog API - Comenta</span></h1><br>
+				<input type="text" id="idusu" hidden="" name="idusu" value="">
+				<input type="text" id="postId" hidden="" name="postId" value="">
+
+				<!-- <div class="form-group">
+					<label class="col-xs-8 control-label">Titulo</label>
+					<input type="text" class="form-control" name="titulo" id="titulo" />
+				</div> -->
+
+				<div class="form-group">
+					<label class="col-xs-8 control-label">Comentario</label>
+					<textarea class="form-control rounded-0" name = "comentario" id="comentario" rows="3"></textarea>
+				</div>
+
+				<div class="form-group">
+					<button class="btn btn-default" id="btnPost">Enviar</button>
+				</div>
+
+				<table class="table">
+					<tbody id="posteo">
+
+					</tbody>
+					<colgroup>
+						<col style="background:pink">
+						<col span="2" style="background:yellow">
+					</colgroup>
+				</table>
+			</div>
+			<div class="col-md-2 col-md-offset-2"></div>
+			
+		</div>
+
+	</body>
+	</html>

@@ -2,10 +2,11 @@
 <html>
 <head>
 	<title>Blog AP</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
 	<script type="text/javascript" src="assets/js/jquery-3.3.1.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
+	
 	<script type="text/javascript" src="assets/js/login-api.js"></script>
 	<script type="text/javascript" src="assets/js/logout.js"></script>
 
@@ -35,19 +36,30 @@ if (token == null) {
 }
 
 
+
 $.ajax({
 	method: 'GET',
-	url: "http://localhost:8080/post",
+	url: 'http://localhost:8080/post',
 	headers : {'Authorization': 'Bearer '+token},
-	success : function(post){
-		$.each(post, function(i,posts){
-			posteos.append('<div class="container"><table><td><h3>'+ posts.title +'<span id="btn"> <a href=""><img src="17232-200.png"width="25" height="25"></a></span></h3><p>By: '+ posts.userId+'</p> '+ posts.body+'</td></table><hr style="color: #0056b2;"></div>');
+	success : function(post){	
 
+		for(f=0;f<post.length;f++)
+		{
+			posteos.append('<h3>'+post[f].title +' <button><a id= "'+ post[f].id+'" href="posts.html"><img src="17232-200.png"width="25" height="25"></a></button></h3> <h5>By: '+post[f].userId +'</h5><h4>'+post[f].body +'</h4><hr>'); 
+		}
+
+		$(document).ready(function(){
+			$("a").click(function() {
+				window.localStorage.setItem("idPost",$(this).attr("id"));
+			});
+
+			
 
 		});
 	}
 
 });
+
 
 });
 
@@ -55,6 +67,7 @@ $.ajax({
 
 </head>
 <body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col"><br>
@@ -62,29 +75,8 @@ $.ajax({
 				<div><p class="text-right"><button  id="btnSalir">LogOut</button></p></div>		
 
 				<div class="col-md-12"><br><br>
-
-					<!-- Inicia Modal-->
-
-					<!-- Modal -->
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-								</div>
-								<div class="modal-body">
-									...
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Termina Modal-->
-
+					<input type="text" id="idpost" hidden="" name="idpost" value="">
+					<!-- <p id="idpost"></p> -->
 					<table class="table">
 						<tbody id="posteos">
 							
@@ -106,3 +98,4 @@ $.ajax({
 
 </body>
 </html>
+
